@@ -798,7 +798,7 @@
 
             // Start Session
             if(!Session::started()){
-                Session::start();
+                Session::start('', true);
             }
 
             // Init Comments
