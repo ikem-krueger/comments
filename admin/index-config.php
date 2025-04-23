@@ -19,23 +19,6 @@
 ?>
 <div id="snicker-configure" class="tab-pane">
     <form method="post" action="<?php echo HTML_PATH_ADMIN_ROOT; ?>snicker#configure">
-        <div class="card shadow-sm" style="margin: 1.5rem 0;">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <input type="hidden" id="tokenUser" name="tokenUser" value="<?php echo $login->username(); ?>" />
-                        <input type="hidden" id="tokenCSRF" name="tokenCSRF" value="<?php echo $security->getTokenCSRF(); ?>" />
-                        <input type="hidden" id="sn-action" name="action" value="snicker" />
-                        <button class="btn btn-primary" name="snicker" value="configure"><?php sn_e("Save Settings"); ?></button>
-                    </div>
-
-                    <div class="col-sm-6">
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div class="accordion shadow-sm" id="accordion-settings">
             <div class="card">
                 <div class="card-header text-uppercase pt-3 pb-3 pl-4 pr-4" data-toggle="collapse" data-target="#accordion-general"><?php sn_e("General Settings"); ?></div>
@@ -472,12 +455,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="card shadow-sm mt-4 mb-4">
-            <div class="card-body">
-                <button class="btn btn-primary" name="snicker" value="configure"><?php sn_e("Save Settings"); ?></button>
             </div>
         </div>
     </form>

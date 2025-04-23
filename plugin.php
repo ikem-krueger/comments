@@ -31,6 +31,12 @@
             parent::__construct();
         }
 
+    public function form()
+    {
+        ob_start();
+        include PATH_PLUGINS . basename(__DIR__) . DS . ADMIN_URI_FILTER . "/index-config.php";
+        return ob_get_clean();
+    }
 
 ##
 ##  HELPER METHODs

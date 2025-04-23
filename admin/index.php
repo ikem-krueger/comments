@@ -69,11 +69,6 @@
             <span class="oi oi-people"></span> <?php sn_e("Users"); ?>
         </a>
     </li>
-    <li class="nav-item">
-        <a id="configure-tab" href="#snicker-configure" class="nav-link nav-config" data-toggle="tab">
-            <span class="oi oi-cog"></span> <?php sn_e("Configuration"); ?>
-        </a>
-    </li>
 </ul>
 
 <div class="tab-content">
