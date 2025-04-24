@@ -778,7 +778,7 @@
             ob_start();
             ?>
                 <a href="<?php echo HTML_PATH_ADMIN_ROOT; ?>snicker" class="nav-link" style="white-space: nowrap;">
-                    <span class="fa fa-comment-o"></span>Snicker <?php sn_e("Comments"); ?>
+                    <span class="fa fa-comment-o"></span> <?php sn_e("Comments"); ?>
                     <?php if(!empty($count)){ ?>
                         <span class="badge badge-success badge-pill"><?php echo $count; ?></span>
                     <?php } ?>

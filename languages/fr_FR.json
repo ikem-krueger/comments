@@ -1,6 +1,6 @@
 {
 	"plugin-data": {
-		"name": "Snicker",
+		"name": "Commentaires",
 		"description": "Un système de commentaires FlatFile natif, compatible AJAX, pour bludit, comprenant un abonnement aux commentaires et entièrement conforme au GDPR !"
 	},
     "s18n-a5d491060952aa8ad5fdee071be752de": "Commentaires",

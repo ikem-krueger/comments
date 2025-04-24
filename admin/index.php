@@ -41,7 +41,7 @@
     }
 ?>
 <h2 class="mt-0 mb-3">
-    <span class="fa fa-comment-o" style="font-size: 0.7em;"></span> Snicker <?php sn_e("Comments"); ?>
+    <span class="fa fa-comment-o" style="font-size: 0.7em;"></span> <?php sn_e("Comments"); ?>
 </h2>
 
 <ul class="nav nav-tabs" data-handle="tabs">

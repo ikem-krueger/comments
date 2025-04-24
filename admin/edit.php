@@ -18,7 +18,7 @@
     $page = new Page($pages->getByUUID($data["page_uuid"]));
 
 ?><h2 class="mt-0 mb-3">
-    <span class="fa fa-comment-o" style="font-size: 0.7em;"></span> Snicker <?php sn_e("Comments"); ?> / <?php sn_e("Edit"); ?>
+    <span class="fa fa-comment-o" style="font-size: 0.7em;"></span> <?php sn_e("Comments"); ?> / <?php sn_e("Edit"); ?>
 </h2>
 <form method="post" action="<?php echo HTML_PATH_ADMIN_ROOT; ?>snicker">
     <div class="card" style="margin: 1.5rem 0;">

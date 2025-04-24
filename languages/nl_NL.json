@@ -1,6 +1,6 @@
 {
 	"plugin-data": {
-		"name": "Snicker",
+		"name": "Reacties",
 		"description": "Een native, AJAX-enabled FlatFile reactiesysteem voor bludit volgens de GDPR-normen en met ondersteuning voor het abonneren op reacties."
 	},
     "s18n-a5d491060952aa8ad5fdee071be752de": "Reacties",

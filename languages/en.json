@@ -1,6 +1,6 @@
 {
 	"plugin-data": {
-		"name": "Snicker",
+		"name": "Comments",
 		"description": "A native, AJAX-enabled FlatFile Comment system for bludit, including a comment subscription and completely compliant with the GDPR!"
 	},
     "s18n-a5d491060952aa8ad5fdee071be752de": "Comments",

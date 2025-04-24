@@ -1,6 +1,6 @@
 {
 	"plugin-data": {
-		"name": "Snicker",
+		"name": "Comentarios",
 		"description": "Sistema de comentarios para Bludit. Incluye suscripción a comentarios y es completamente compatible con el RGPD (Reglamento General de Protección de datos). Usa tecnologías AJAX y Flatfile. Ligero y seguro."	},
     "s18n-a5d491060952aa8ad5fdee071be752de": "Comentarios",
     "s18n-de95b43bceeb4b998aed4aed5cef1ae7": "Editar",
