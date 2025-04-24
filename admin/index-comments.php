@@ -62,13 +62,13 @@
                 <div class="card shadow-sm" style="margin: 1.5rem 0;">
                     <div class="card-body">
                         <div class="row">
-                            <form class="col-sm-6" method="get" action="<?php echo DOMAIN_ADMIN; ?>snicker">
+                            <form class="col-sm-12" method="get" action="<?php echo DOMAIN_ADMIN; ?>snicker">
                                 <div class="form-row align-items-center">
-                                    <div class="col-sm-8">
+                                    <div class="col">
                                         <?php $search = isset($_GET["search"])? $_GET["search"]: ""; ?>
                                         <input type="text" name="search" value="<?php echo $search; ?>" class="form-control" placeholder="<?php sn_e("Comment Title or Excerpt"); ?>" />
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-auto">
                                         <button class="btn btn-primary" name="view" value="search"><?php sn_e("Search Comments"); ?></button>
                                     </div>
                                 </div>
@@ -101,7 +101,7 @@
                 <?php /* No Comments available */ ?>
                 <?php if(count($comments) < 1){ ?>
                         <div class="row justify-content-md-center">
-                            <div class="col-sm-6">
+                            <div class="col">
                                 <div class="card w-100 shadow-sm bg-light">
                                     <div class="card-body text-center p-4"><i><?php sn_e("No Comments available"); ?></i></div>
                                 </div>
@@ -113,17 +113,17 @@
 
                 <?php /* Comments Table */ ?>
                 <?php $link = DOMAIN_ADMIN . "snicker?action=snicker&snicker=%s&uid=%s&status=%s&tokenCSRF=" . $security->getTokenCSRF(); ?>
-                <table class="table table-bordered table-hover-light shadow-sm mt-3">
-                    <?php foreach(array("thead", "tfoot") AS $tag){ ?>
+                <table class="table mt-3">
+                    <?php foreach(array("thead") AS $tag){ ?>
                         <<?php echo $tag; ?>>
-                            <tr class="thead-light">
-                                <th width="56%" class="border-0 p-3 text-uppercase text-muted"><?php sn_e("Comment"); ?></th>
-                                <th width="22%" class="border-0 p-3 text-uppercase text-muted text-center"><?php sn_e("Author"); ?></th>
-                                <th width="22%" class="border-0 p-3 text-uppercase text-muted text-center"><?php sn_e("Actions"); ?></th>
+                            <tr>
+                                <th width="56%" class="border-0"><?php sn_e("Comment"); ?></th>
+                                <th width="22%" class="border-0 d-none d-lg-table-cell"><?php sn_e("Author"); ?></th>
+                                <th width="22%" class="border-0 text-center d-sm-table-cell"><?php sn_e("Actions"); ?></th>
                             </tr>
                         </<?php echo $tag; ?>>
                     <?php } ?>
-                    <tbody class="shadow-sm-both">
+                    <tbody>
                         <?php foreach($comments AS $uid){ ?>
                             <?php
                                 $data = $SnickerIndex->getComment($uid, $status);

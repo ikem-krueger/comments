@@ -44,7 +44,7 @@
     <span class="oi oi-comment-square" style="font-size: 0.7em;"></span> Snicker <?php sn_e("Comments"); ?>
 </h2>
 
-<ul class="nav nav-pills" data-handle="tabs">
+<ul class="nav nav-tabs" data-handle="tabs">
     <?php foreach($tabs AS $tab){ ?>
         <?php $class = "nav-link nav-{$tab}" . ($current === $tab? " active": ""); ?>
         <li class="nav-item">

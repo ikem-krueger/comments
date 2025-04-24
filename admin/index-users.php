@@ -35,12 +35,12 @@
     <div class="card shadow-sm" style="margin: 1.5rem 0;">
         <div class="card-body">
             <div class="row">
-                <form class="col-sm-6" method="get" action="<?php echo DOMAIN_ADMIN; ?>snicker#users">
+                <form class="col-sm-12" method="get" action="<?php echo DOMAIN_ADMIN; ?>snicker#users">
                     <div class="form-row align-items-center">
-                        <div class="col-sm-8">
+                        <div class="col">
                             <input type="text" name="search" value="<?php echo $search; ?>" class="form-control" placeholder="<?php sn_e("Username or eMail Address"); ?>" />
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-auto">
                             <button class="btn btn-primary" name="view" value="users"><?php sn_e("Search Users"); ?></button>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
 
     <?php if(!$users || count($users) === 0){ ?>
         <div class="row justify-content-md-center">
-            <div class="col-sm-6">
+            <div class="col">
                 <div class="card w-100 shadow-sm bg-light">
                     <div class="card-body text-center p-4"><i><?php sn_e("No Users available"); ?></i></div>
                 </div>
@@ -80,19 +80,19 @@
         </div>
     <?php } else { ?>
         <?php $link = DOMAIN_ADMIN . "snicker?action=snicker&snicker=users&uuid=%s&handle=%s&tokenCSRF=" . $security->getTokenCSRF(); ?>
-        <table class="table table-bordered table-hover-light shadow-sm mt-3">
-            <?php foreach(array("thead", "tfoot") AS $tag){ ?>
+        <table class="table mt-3">
+            <?php foreach(array("thead") AS $tag){ ?>
                 <<?php echo $tag; ?>>
-                    <tr class="thead-light">
-                        <th width="38%" class="border-0 p-3 text-uppercase text-muted"><?php sn_e("Username"); ?></th>
-                        <th width="15%" class="border-0 p-3 text-uppercase text-muted"><?php sn_e("eMail"); ?></th>
-                        <th width="22%" class="border-0 p-3 text-uppercase text-muted"><?php sn_e("Comments"); ?></th>
-                        <th width="25%" class="border-0 p-3 text-uppercase text-muted text-center"><?php sn_e("Actions"); ?></th>
+                    <tr>
+                        <th width="38%" class="border-0"><?php sn_e("Username"); ?></th>
+                        <th width="15%" class="border-0 d-none d-lg-table-cell"><?php sn_e("eMail"); ?></th>
+                        <th width="22%" class="border-0 d-none d-lg-table-cell"><?php sn_e("Comments"); ?></th>
+                        <th width="25%" class="border-0 text-center d-sm-table-cell"><?php sn_e("Actions"); ?></th>
                     </tr>
                 </<?php echo $tag; ?>>
             <?php } ?>
 
-            <tbody class="shadow-sm-both">
+            <tbody>
                 <?php foreach($users AS $uuid => $user){ ?>
                     <tr>
                         <td class="p-3">
@@ -101,7 +101,7 @@
                         <td class="p-3">
                             <?php echo $user["email"]; ?>
                         </td>
-                        <td class="text-center align-middle pt-2 pb-2 pl-1 pr-1">
+                        <td class="p-3">
                             <a href="<?php echo DOMAIN_ADMIN; ?>snicker?view=user&user=<?php echo $uuid; ?>">
                                 <?php echo count(isset($user["comments"])? $user["comments"]: array()); ?>
                                 <?php sn_e("Comments"); ?>
