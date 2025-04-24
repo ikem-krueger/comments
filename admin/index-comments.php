@@ -136,7 +136,8 @@
                                 <td class="pt-3 pb-3 pl-3 pr-3">
                                     <?php
                                         if($SnickerPlugin->getValue("comment_title") !== "disabled" && !empty($data["title"])){
-                                            echo '<b class="d-inline-block">' . $data["title"] . '</b>';
+                                            echo '<a href="' . DOMAIN_ADMIN . 'snicker/edit/?uid=' . $uid . '">' . $data["title"] . '</a>';
+
                                         }
                                         echo '<p class="text-muted m-0" style="font-size:12px;">' . (isset($data["excerpt"])? $data["excerpt"]: "") . '</p>';
                                         if(!empty($data["parent_uid"]) && $SnickerIndex->exists($data["parent_uid"]) && $view !== "single"){
