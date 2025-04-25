@@ -11,3 +11,7 @@ I was happy with how the plugin worked. I was not happy with how the plugin look
 - change the appearance to match the rest of the ui
 - make the ui more logical
 - make the plugin easier to use
+
+## Disclaimer
+
+This is beta software, as long as this disclaimer exist. There will be bugs.
