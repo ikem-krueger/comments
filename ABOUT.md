@@ -14,4 +14,4 @@ I was happy with how the plugin worked. I was not happy with how the plugin look
 
 ## Disclaimer
 
-This is beta software, as long as this disclaimer exist. There will be bugs.
+This is beta software, as long as this disclaimer exist. There will be bugs. Use is at your own risk.
