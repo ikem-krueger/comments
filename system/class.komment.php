@@ -1,17 +1,17 @@
 <?php
 /*
- |  Snicker     The first native FlatFile Comment Plugin 4 Bludit
- |  @file       ./system/class.snicker.php
- |  @author     SamBrishes <sam@pytes.net>
+ |  Komment     The second native FlatFile Comment Plugin 4 Bludit
+ |  @file       ./system/class.komment.php
+ |  @author     Ikem Krueger <ikem.krueger@gmail.com>
  |  @version    0.1.2 [0.1.0] - Alpha
  |
- |  @website    https://github.com/pytesNET/snicker
+ |  @website    https://github.com/ikem-krueger/komment
  |  @license    X11 / MIT License
- |  @copyright  Copyright © 2019 SamBrishes, pytesNET <info@pytes.net>
+ |  @copyright  Copyright © 2019 SamBrishes, 2025 Ikem Krueger
  */
     if(!defined("BLUDIT")){ die("Go directly to Jail. Do not pass Go. Do not collect 200 Cookies!"); }
 
-    class Snicker{
+    class Komment{
         /*
          |  AVAILABLE THEMES
          */
@@ -44,8 +44,8 @@
             $nonce = sha1($security->getUserIp() . $_SERVER["HTTP_USER_AGENT"] . session_id());
 
             // Get Database
-            if(isset($security->db["snicker"])){
-                $db = $security->db["snicker"];
+            if(isset($security->db["komment"])){
+                $db = $security->db["komment"];
             } else {
                 $db = array();
             }
@@ -66,7 +66,7 @@
             $db[$nonce] = $token . "::" . (time() + (6 * 60 * 60));
 
             // Store and Return
-            $security->db["snicker"] = $db;
+            $security->db["komment"] = $db;
             $security->save();
             return $nonce;
         }
@@ -79,8 +79,8 @@
             global $security;
 
             // Get Database
-            if(isset($security->db["snicker"])){
-                $db = $security->db["snicker"];
+            if(isset($security->db["komment"])){
+                $db = $security->db["komment"];
             } else {
                 return false;
             }
@@ -107,7 +107,7 @@
             }
 
             // Store and Return
-            $security->db["snicker"] = $db;
+            $security->db["komment"] = $db;
             $security->save();
             return false;
         }
@@ -197,7 +197,7 @@
          |  @return bool    TRUE if everything is fluffy, FALSE if not.
          */
         public function initThemes(){
-            $dir = SNICKER_PATH . "themes" . DS;
+            $dir = KOMMENT_PATH . "themes" . DS;
             if(!is_dir($dir)){
                 //@todo Error
                 return false;
@@ -210,16 +210,16 @@
                     if(!is_dir($dir . $theme) || in_array($theme, array(".", ".."))){
                         continue;
                     }
-                    if(!file_exists($dir . $theme . DS . "snicker.php")){
+                    if(!file_exists($dir . $theme . DS . "komment.php")){
                         continue;
                     }
-                    require_once($dir . $theme . DS . "snicker.php");
+                    require_once($dir . $theme . DS . "komment.php");
 
                     // Load Class
-                    if(!class_exists(ucFirst($theme) . "_SnickerTemplate")){
+                    if(!class_exists(ucFirst($theme) . "_KommentTemplate")){
                         continue;
                     }
-                    $class = ucFirst($theme) . "_SnickerTemplate";
+                    $class = ucFirst($theme) . "_KommentTemplate";
                     $themes[$theme] = new $class();
                 }
             }
@@ -320,7 +320,7 @@
             }
 
             // Get Temporary Data
-            $data = Session::get("snicker-comment");
+            $data = Session::get("komment-comment");
             if(!is_array($data)){
                 $data = array();
             }
@@ -343,7 +343,7 @@
 
             // Render Form
             ob_start();
-            ?><div id="comments-form" class="snicker-comments-form"><?php
+            ?><div id="comments-form" class="komment-comments-form"><?php
                 if($this->commentsAllowed($page)){
                     $this->renderTheme("form", array($username, $email, $title, $comment), true);
                 } else {
@@ -401,7 +401,7 @@
             // Render Comments
             $list = $comments->getList($cpage, $limit);
             ob_start();
-            ?><div id="comments-list" class="snicker-comments-list"><?php
+            ?><div id="comments-list" class="komment-comments-list"><?php
                 if(count($list) < 1){
                     if($this->commentsAllowed($page)){
                         ?>
@@ -460,7 +460,7 @@
 
             ob_start();
             ?>
-                <div id="comments" class="snicker-comments">
+                <div id="comments" class="komment-comments">
                     <?php
                         if(sn_config("frontend_form") === "top"){
                             print($this->renderForm());
@@ -500,13 +500,13 @@
          |  @return multi   The new Comment instance on success, FALSE on failure.
          */
         public function getComment($uid, $return = "list"){
-            global $SnickerIndex;
-            if(!is_a($SnickerIndex, "CommentsIndex")){
-                $SnickerIndex = new CommentsIndex();
+            global $KommentIndex;
+            if(!is_a($KommentIndex, "CommentsIndex")){
+                $KommentIndex = new CommentsIndex();
             }
 
             // Get Comment
-            $comment = $SnickerIndex->getComment($uid);
+            $comment = $KommentIndex->getComment($uid);
             if($return === "list"){
                 return $comment;
             }
@@ -562,20 +562,20 @@
          |  @return multi   The array with all respective comments, NULL otherwise.
          */
         public function getIndex($type = null){
-            global $SnickerIndex;
+            global $KommentIndex;
             switch($type){
                 case "pending":
-                    return $SnickerIndex->getPending();
+                    return $KommentIndex->getPending();
                 case "approved":
-                    return $SnickerIndex->getApproved();
+                    return $KommentIndex->getApproved();
                 case "rejected":
-                    return $SnickerIndex->getRejected();
+                    return $KommentIndex->getRejected();
                 case "spam":
-                    return $SnickerIndex->getSpam();
+                    return $KommentIndex->getSpam();
                 case "all":
-                    return $SnickerIndex->getDB();
+                    return $KommentIndex->getDB();
             }
-            return $SnickerIndex;
+            return $KommentIndex;
         }
 
 
@@ -643,8 +643,8 @@
          |  @return bool    TRUE if the user has rated, FALSE if not.
          */
         public function hasRated($uid, $type = null){
-            global $SnickerVotes;
-            return $SnickerVotes->hasVoted($uid, $type);
+            global $KommentVotes;
+            return $KommentVotes->hasVoted($uid, $type);
         }
         public function hasLiked($uid){
             return $this->hasRated($uid, "like");
@@ -663,7 +663,7 @@
          |  @return <response>
          */
         public function writeComment($data, $key = null){
-            global $login, $pages, $users, $url, $SnickerIndex, $SnickerUsers;
+            global $login, $pages, $users, $url, $KommentIndex, $KommentUsers;
 
             // Temp
             if(!is_a($login, "Login")){
@@ -672,13 +672,13 @@
             if(!Session::started()){
                 Session::start();
             }
-            Session::set("snicker-comment", $data);
+            Session::set("komment-comment", $data);
             $referer = DOMAIN . $url->uri();
 
             // Check Page UUID
             if(!isset($data["page_uuid"]) || ($page = $pages->getByUUID($data["page_uuid"])) === false){
                 return sn_response(array(
-                    "referer"   => $referer . "#snicker-comments-form",
+                    "referer"   => $referer . "#komment-comments-form",
                     "error"     => sn_config("")
                 ), $key);
             }
@@ -689,7 +689,7 @@
             if($captcha !== "disabled"){
                 if(!(isset($data["captcha"]) && $this->validateCaptcha($data["captcha"]))){
                     return sn_response(array(
-                        "referer"   => $referer . "#snicker-comments-form",
+                        "referer"   => $referer . "#komment-comments-form",
                         "error"     => sn__("The answer to the Captcha hasn't been passed or is wrong!"),
                         "captcha"   => $this->generateCaptcha(150, 40, true)
                     ), $key);
@@ -701,7 +701,7 @@
             if($terms !== "disabled"){
                 if(!isset($data["terms"]) || $data["terms"] !== "1"){
                     return sn_response(array(
-                        "referer"   => $referer . "#snicker-comments-form",
+                        "referer"   => $referer . "#komment-comments-form",
                         "error"     => sn_config("string_error_6")
                     ), $key);
                 }
@@ -711,7 +711,7 @@
             if(sn_config("comment_title") === "required"){
                 if(!isset($data["title"]) || empty($data["title"])){
                     return sn_response(array(
-                        "referer"   => $referer . "#snicker-comments-form",
+                        "referer"   => $referer . "#komment-comments-form",
                         "error"     => sn_config("string_error_5")
                     ), $key);
                 }
@@ -720,7 +720,7 @@
             // Check Comment
             if(!isset($data["comment"]) || empty($data["comment"])){
                 return sn_response(array(
-                    "referer"   => $referer . "#snicker-comments-form",
+                    "referer"   => $referer . "#komment-comments-form",
                     "error"     => sn_config("string_error_4")
                 ), $key);
             }
@@ -729,30 +729,30 @@
             if(isset($data["user"]) && isset($data["token"])){
                 if(($user = $this->validateUser($data["user"], $data["token"])) === false){
                     return sn_response(array(
-                        "referer"   => $referer . "#snicker-comments-form",
+                        "referer"   => $referer . "#komment-comments-form",
                         "error"     => sn_config("string_error_1")
                     ), $key);
                 }
                 $data["author"] = "bludit::" . $user->username();
             } else if(isset($data["username"]) && isset($data["email"])){
-                if(($user = $SnickerUsers->user($data["username"], $data["email"])) === false){
+                if(($user = $KommentUsers->user($data["username"], $data["email"])) === false){
                     $email = strtolower(Sanitize::email($data["email"]));
                     $error = !Valid::email($email)? "string_error_3": "string_error_2";
                     return sn_response(array(
-                        "referer"   => $referer . "#snicker-comments-form",
+                        "referer"   => $referer . "#komment-comments-form",
                         "error"     => sn_config($error)
                     ), $key);
                 }
-                if($SnickerUsers->db[$user]["blocked"]){
+                if($KommentUsers->db[$user]["blocked"]){
                     return sn_response(array(
-                        "referer"   => $referer . "#snicker-comments-form",
+                        "referer"   => $referer . "#komment-comments-form",
                         "error"     => sn_config("string_error_7")
                     ), $key);
                 }
                 $data["author"] = "guest::" . $user;
             } else {
                 return sn_response(array(
-                    "referer"   => $referer . "#snicker-comments-form",
+                    "referer"   => $referer . "#komment-comments-form",
                     "error"     => sn_config("string_error_1")
                 ), $key);
             }
@@ -778,9 +778,9 @@
                 }
                 if(sn_config("moderation_approved")){
                     if(strpos($data["author"], "guest::") === 0){
-                        $user = $SnickerUsers->get(substr($data["author"], strlen("guest::")));
+                        $user = $KommentUsers->get(substr($data["author"], strlen("guest::")));
                         foreach($user["comments"] AS $uuid){
-                            if(($check = $SnickerIndex->getComment($uuid)) === false){
+                            if(($check = $KommentIndex->getComment($uuid)) === false){
                                 continue;
                             }
                             if($check["status"] === "approved"){
@@ -801,13 +801,13 @@
             // Add Comment
             if(($uid = $comments->add($data)) === false){
                 return sn_response(array(
-                    "referer"   => $referer . "#snicker-comments-form",
+                    "referer"   => $referer . "#komment-comments-form",
                     "error"     => sn_config("string_error_1")
                 ), $key);
             }
 
             // Clear Temp and Return
-            Session::set("snicker-comment", null);
+            Session::set("komment-comment", null);
             $comment = new Comment($uid, $data["page_uuid"]);
             return sn_response(array(
                 "referer"   => $referer . "#comment-" . $uid,
@@ -826,7 +826,7 @@
          |  @return <response>
          */
         public function editComment($uid, $data, $key = null){
-            global $url, $SnickerIndex, $SnickerUsers;
+            global $url, $KommentIndex, $KommentUsers;
 
             // Start Session
             if(!Session::started()){
@@ -834,7 +834,7 @@
             }
 
             // Get Comment
-            if(($comment = $SnickerIndex->getComment($uid)) === false){
+            if(($comment = $KommentIndex->getComment($uid)) === false){
                 return sn_response(array(
                     "error"     => sn__("The comment UID doesn't exist or is invalid!"),
                     "referer"   => $referer
@@ -869,7 +869,7 @@
                 }
                 $data["author"] = "bludit::" . $user->username();
             } else if(isset($data["username"]) && isset($data["email"])){
-                if(($user = $SnickerUsers->user($data["username"], $data["email"])) === false){
+                if(($user = $KommentUsers->user($data["username"], $data["email"])) === false){
                     return sn_response(array(
                         "error"     => sn_config("string_error_2"),
                         "referer"   => $referer
@@ -906,11 +906,11 @@
          |  @return <response>
          */
         public function moderateComment($uid, $status = "approved", $key = null){
-            global $url, $SnickerIndex;
+            global $url, $KommentIndex;
             $referer = DOMAIN . HTML_PATH_ADMIN_ROOT . $url->slug();
 
             // Check Parameters
-            if(($comment = $SnickerIndex->getComment($uid)) === false){
+            if(($comment = $KommentIndex->getComment($uid)) === false){
                 return sn_response(array(
                     "error"     => sn__("The comment UID doesn't exist or is invalid!"),
                     "referer"   => $referer . "#{$_GET["status"]}"
@@ -947,10 +947,10 @@
          |  @return <response>
          */
         public function rateComment($uid, $type){
-            global $pages, $SnickerIndex, $SnickerVotes;
+            global $pages, $KommentIndex, $KommentVotes;
 
             // Check Parameters
-            if(($comment = $SnickerIndex->getComment($uid)) === false){
+            if(($comment = $KommentIndex->getComment($uid)) === false){
                 return sn_response(array(
                     "error"     => sn__("The comment UID doesn't exist or is invalid!")
                 ), $key);
@@ -977,17 +977,17 @@
             $rating = $comments->getCommentDB($uid)["rating"];
 
             // Get Ratings
-            if($SnickerVotes->hasVoted($uid, null)){
-                if($SnickerVotes->hasVoted($uid, $type)){
+            if($KommentVotes->hasVoted($uid, null)){
+                if($KommentVotes->hasVoted($uid, $type)){
                     return sn_response(array(
                         "error"   => sn_config("string_error_8"),
                         "referer"   => $referer
                     ));
                 }
-                $SnickerVotes->delete($uid);
+                $KommentVotes->delete($uid);
                 $rating[($type == "like")? 1: 0]--;
             }
-            if(!$SnickerVotes->add($uid, $type)){
+            if(!$KommentVotes->add($uid, $type)){
                 return sn_response(array(
                     "error"   => sn_config("string_error_1"),
                     "referer"   => $referer
@@ -1018,11 +1018,11 @@
          |  @return <response>
          */
         public function deleteComment($uid, $key = null){
-            global $url, $SnickerIndex;
-            $referer = DOMAIN . HTML_PATH_ADMIN_ROOT . "snicker";
+            global $url, $KommentIndex;
+            $referer = DOMAIN . HTML_PATH_ADMIN_ROOT . "komment";
 
             // Check Parameters
-            if(($comment = $SnickerIndex->getComment($uid)) === false){
+            if(($comment = $KommentIndex->getComment($uid)) === false){
                 return sn_response(array(
                     "error"     => sn__("The comment UID doesn't exist or is invalid!"),
                     "referer"   => $referer

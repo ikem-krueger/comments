@@ -1,22 +1,22 @@
 <?php
 /*
- |  Snicker     The first native FlatFile Comment Plugin 4 Bludit
+ |  Komment     The second native FlatFile Comment Plugin 4 Bludit
  |  @file       ./admin/index-users.php
- |  @author     SamBrishes <sam@pytes.net>
+ |  @author     Ikem Krueger <ikem.krueger@gmail.com>
  |  @version    0.1.2 [0.1.0] - Alpha
  |
- |  @website    https://github.com/pytesNET/snicker
+ |  @website    https://github.com/ikem-krueger/komment
  |  @license    X11 / MIT License
- |  @copyright  Copyright © 2019 SamBrishes, pytesNET <info@pytes.net>
+ |  @copyright  Copyright © 2019 SamBrishes, 2025 Ikem Krueger
  */
     if(!defined("BLUDIT")){ die("Go directly to Jail. Do not pass Go. Do not collect 200 Cookies!"); }
 
-    global $SnickerUsers;
+    global $KommentUsers;
 
     // Get Data
     $page = max((isset($_GET["page"])? (int) $_GET["page"]: 1), 1);
     $limit = sn_config("frontend_per_page");
-    $total = count($SnickerUsers->db);
+    $total = count($KommentUsers->db);
 
     // Get Users
     $search = null;
@@ -25,17 +25,17 @@
         $limit = -1;
         $search = isset($_GET["search"])? $_GET["search"]: null;
     }
-    $users = $SnickerUsers->getList($search, $page, $limit);
+    $users = $KommentUsers->getList($search, $page, $limit);
 
     // Link
-    $link = DOMAIN_ADMIN . "snicker?page=%d&tab=users#users";
+    $link = DOMAIN_ADMIN . "komment?page=%d&tab=users#users";
 
 ?>
-<div id="snicker-users" class="tab-pane">
+<div id="komment-users" class="tab-pane">
     <div class="card shadow-sm" style="margin: 1.5rem 0;">
         <div class="card-body">
             <div class="row">
-                <form class="col-sm-12" method="get" action="<?php echo DOMAIN_ADMIN; ?>snicker#users">
+                <form class="col-sm-12" method="get" action="<?php echo DOMAIN_ADMIN; ?>komment#users">
                     <div class="form-row align-items-center">
                         <div class="col">
                             <input type="text" name="search" value="<?php echo $search; ?>" class="form-control" placeholder="<?php sn_e("Username or eMail Address"); ?>" />
@@ -79,7 +79,7 @@
             </div>
         </div>
     <?php } else { ?>
-        <?php $link = DOMAIN_ADMIN . "snicker?action=snicker&snicker=users&uuid=%s&handle=%s&tokenCSRF=" . $security->getTokenCSRF(); ?>
+        <?php $link = DOMAIN_ADMIN . "komment?action=komment&komment=users&uuid=%s&handle=%s&tokenCSRF=" . $security->getTokenCSRF(); ?>
         <table class="table mt-3">
             <?php foreach(array("thead") AS $tag){ ?>
                 <<?php echo $tag; ?>>
@@ -102,7 +102,7 @@
                             <?php echo $user["email"]; ?>
                         </td>
                         <td class="p-3">
-                            <a href="<?php echo DOMAIN_ADMIN; ?>snicker?view=user&user=<?php echo $uuid; ?>">
+                            <a href="<?php echo DOMAIN_ADMIN; ?>komment?view=user&user=<?php echo $uuid; ?>">
                                 <?php echo count(isset($user["comments"])? $user["comments"]: array()); ?>
                                 <?php sn_e("Comments"); ?>
                             </a>

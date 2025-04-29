@@ -1,13 +1,13 @@
 <?php
 /*
- |  Snicker     The first native FlatFile Comment Plugin 4 Bludit
+ |  Komment     The second native FlatFile Comment Plugin 4 Bludit
  |  @file       ./system/class.comments.php
- |  @author     SamBrishes <sam@pytes.net>
+ |  @author     Ikem Krueger <ikem.krueger@gmail.com>
  |  @version    0.1.2 [0.1.0] - Alpha
  |
- |  @website    https://github.com/pytesNET/snicker
+ |  @website    https://github.com/ikem-krueger/komment
  |  @license    X11 / MIT License
- |  @copyright  Copyright © 2019 SamBrishes, pytesNET <info@pytes.net>
+ |  @copyright  Copyright © 2019 SamBrishes, 2025 Ikem Krueger
  */
     if(!defined("BLUDIT")){ die("Go directly to Jail. Do not pass Go. Do not collect 200 Cookies!"); }
 
@@ -55,7 +55,7 @@
                 throw new Exception($error);
             }
             $this->uuid = $uuid;
-            parent::__construct(DB_SNICKER_COMMENTS . "comments-{$uuid}.php");
+            parent::__construct(DB_KOMMENT_COMMENTS . "comments-{$uuid}.php");
         }
 
         /*
@@ -208,7 +208,7 @@
          |  @return array   The respective database keys with an ARRAY or FALSE on failure.
          */
         public function getDepthList($page, $limit, $type = array("comment", "reply"), $status = array("approved")){
-            global $login, $SnickerUsers;
+            global $login, $KommentUsers;
             $this->sortBy();
 
             // Validate Parameters
@@ -229,7 +229,7 @@
                 if($login->isLogged()){
                     $user = "bludit::" . $login->username();
                 } else {
-                    if(($user = $SnickerUsers->getCurrent()) !== false){
+                    if(($user = $KommentUsers->getCurrent()) !== false){
                         $user = "guest::" . $user;
                     }
                 }
@@ -345,7 +345,7 @@
          |  @return multi   The comment UID on success, FALSE on failure.
          */
         public function add($args){
-            global $SnickerIndex, $SnickerUsers;
+            global $KommentIndex, $KommentUsers;
 
             // Loop Default Fields
             $row = array();
@@ -412,14 +412,14 @@
             }
 
             // Add Index
-            if(!is_a($SnickerIndex, "CommentsIndex")){
-                $SnickerIndex = new CommentsIndex();
+            if(!is_a($KommentIndex, "CommentsIndex")){
+                $KommentIndex = new CommentsIndex();
             }
-            if(!$SnickerIndex->add($uid, $row)){
+            if(!$KommentIndex->add($uid, $row)){
                 return false;
             }
             if(strpos($row["author"], "guest::") === 0){
-                $SnickerUsers->addComment(substr($row["author"], strlen("guest::")), $uid);
+                $KommentUsers->addComment(substr($row["author"], strlen("guest::")), $uid);
             }
 
             // Insert Comment
@@ -442,7 +442,7 @@
          |  @return multi   The comment UID on success, FALSE on failure.
          */
         public function edit($uid, $args){
-            global $SnickerIndex;
+            global $KommentIndex;
 
             // Loop Default Fields
             $row = array();
@@ -495,7 +495,7 @@
             }
 
             // Update Index
-            if(!$SnickerIndex->edit($uid, $row)){
+            if(!$KommentIndex->edit($uid, $row)){
                 return false;
             }
 
@@ -518,18 +518,18 @@
          |  @return bool    TRUE on success, FALSE on failure.
          */
         public function delete($uid){
-            global $SnickerIndex, $SnickerUsers;
+            global $KommentIndex, $KommentUsers;
             if(!isset($this->db[$uid])){
                 return false;
             }
             $row = $this->db[$uid];
 
             // Remove Index
-            if(!$SnickerIndex->delete($uid)){
+            if(!$KommentIndex->delete($uid)){
                 return false;
             }
             if(strpos($row["author"], "guest::") === 0){
-                $SnickerUsers->deleteComment(substr($row["author"], strlen("guest::")), $uid);
+                $KommentUsers->deleteComment(substr($row["author"], strlen("guest::")), $uid);
             }
 
             // Remove Database Item
@@ -548,13 +548,13 @@
          |  @return bool    TRUE
          */
         public function sortBy(){
-            global $SnickerPlugin;
+            global $KommentPlugin;
 
-            if($SnickerPlugin->getValue("frontend_order") === "date_asc"){
+            if($KommentPlugin->getValue("frontend_order") === "date_asc"){
                 uasort($this->db, function($a, $b){
                     return $a["date"] > $b["date"];
                 });
-            } else if($SnickerPlugin->getValue("frontend_order") === "date_desc"){
+            } else if($KommentPlugin->getValue("frontend_order") === "date_desc"){
                 uasort($this->db, function($a, $b){
                     return $a["date"] < $b["date"];
                 });

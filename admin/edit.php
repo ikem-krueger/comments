@@ -1,34 +1,34 @@
 <?php
 /*
- |  Snicker     The first native FlatFile Comment Plugin 4 Bludit
+ |  Komment     The second native FlatFile Comment Plugin 4 Bludit
  |  @file       ./admin/edit.php
- |  @author     SamBrishes <sam@pytes.net>
+ |  @author     Ikem Krueger <ikem.krueger@gmail.com>
  |  @version    0.1.2 [0.1.0] - Alpha
  |
- |  @website    https://github.com/pytesNET/snicker
+ |  @website    https://github.com/ikem-krueger/komment
  |  @license    X11 / MIT License
- |  @copyright  Copyright © 2019 SamBrishes, pytesNET <info@pytes.net>
+ |  @copyright  Copyright © 2019 SamBrishes, 2025 Ikem Krueger
  */
     if(!defined("BLUDIT")){ die("Go directly to Jail. Do not pass Go. Do not collect 200 Cookies!"); }
 
-    global $login, $pages, $security, $SnickerIndex;
+    global $login, $pages, $security, $KommentIndex;
 
-    $data = $SnickerIndex->getComment($_GET["uid"]);
+    $data = $KommentIndex->getComment($_GET["uid"]);
     $comment = new Comment($_GET["uid"], $data["page_uuid"]);
     $page = new Page($pages->getByUUID($data["page_uuid"]));
 
 ?><h2 class="mt-0 mb-3">
     <span class="fa fa-comment-o" style="font-size: 0.7em;"></span> <?php sn_e("Comments"); ?> / <?php sn_e("Edit"); ?>
 </h2>
-<form method="post" action="<?php echo HTML_PATH_ADMIN_ROOT; ?>snicker">
+<form method="post" action="<?php echo HTML_PATH_ADMIN_ROOT; ?>komment">
     <div class="card" style="margin: 1.5rem 0;">
         <div class="card-body">
             <div class="row">
                 <div class="col-sm-6">
                     <input type="hidden" id="tokenUser" name="tokenUser" value="<?php echo $login->username(); ?>" />
                     <input type="hidden" id="tokenCSRF" name="tokenCSRF" value="<?php echo $security->getTokenCSRF(); ?>" />
-                    <input type="hidden" id="sn-action" name="action" value="snicker" />
-                    <input type="hidden" id="sn-snicker" name="snicker" value="edit" />
+                    <input type="hidden" id="sn-action" name="action" value="komment" />
+                    <input type="hidden" id="sn-komment" name="komment" value="edit" />
                     <input type="hidden" id="sn-unique" name="uid" value="<?php echo $comment->uid(); ?>" />
                     <button class="btn btn-primary" name="type" value="edit"><?php sn_e("Update Comment"); ?></button>
                 </div>

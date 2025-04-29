@@ -1,13 +1,13 @@
 <?php
 /*
- |  Snicker     The first native FlatFile Comment Plugin 4 Bludit
+ |  Komment     The second native FlatFile Comment Plugin 4 Bludit
  |  @file       ./system/functions.php
- |  @author     SamBrishes <sam@pytes.net>
+ |  @author     Ikem Krueger <ikem.krueger@gmail.com>
  |  @version    0.1.2 [0.1.0] - Alpha
  |
- |  @website    https://github.com/pytesNET/snicker
+ |  @website    https://github.com/ikem-krueger/komment
  |  @license    X11 / MIT License
- |  @copyright  Copyright © 2019 SamBrishes, pytesNET <info@pytes.net>
+ |  @copyright  Copyright © 2019 SamBrishes, 2025 Ikem Krueger
  */
     if(!defined("BLUDIT")){ die("Go directly to Jail. Do not pass Go. Do not collect 200 Cookies!"); }
 
@@ -47,13 +47,13 @@
      |  SHORTFUNC :: GET VALUE
      |  @since  0.1.0
      |
-     |  @param  string  The respective Snicker configuration key.
+     |  @param  string  The respective Komment configuration key.
      |
      |  @return multi   The respective value or FALSE if the option doens't exist.
      */
     function sn_config($key){
-        global $SnickerPlugin;
-        return $SnickerPlugin->getValue($key);
+        global $KommentPlugin;
+        return $KommentPlugin->getValue($key);
     }
 
     /*
@@ -63,8 +63,8 @@
      |  @return die();
      */
     function sn_response($data, $key = null){
-        global $SnickerPlugin;
-        return $SnickerPlugin->response($data, $key);
+        global $KommentPlugin;
+        return $KommentPlugin->response($data, $key);
     }
 
     /*
@@ -74,8 +74,8 @@
      |  @return die();
      */
     function sn_selected($field, $value = true, $print = true){
-        global $SnickerPlugin;
-        return $SnickerPlugin->selected($field, $value, $print);
+        global $KommentPlugin;
+        return $KommentPlugin->selected($field, $value, $print);
     }
 
     /*
@@ -85,6 +85,6 @@
      |  @return die();
      */
     function sn_checked($field, $value = true, $print = true){
-        global $SnickerPlugin;
-        return $SnickerPlugin->checked($field, $value, $print);
+        global $KommentPlugin;
+        return $KommentPlugin->checked($field, $value, $print);
     }

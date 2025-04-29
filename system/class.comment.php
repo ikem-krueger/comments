@@ -1,13 +1,13 @@
 <?php
 /*
- |  Snicker     The first native FlatFile Comment Plugin 4 Bludit
+ |  Komment     The second native FlatFile Comment Plugin 4 Bludit
  |  @file       ./system/class.comment.php
- |  @author     SamBrishes <sam@pytes.net>
+ |  @author     Ikem Krueger <ikem.krueger@gmail.com>
  |  @version    0.1.2 [0.1.0] - Alpha
  |
- |  @website    https://github.com/pytesNET/snicker
+ |  @website    https://github.com/ikem-krueger/komment
  |  @license    X11 / MIT License
- |  @copyright  Copyright © 2019 SamBrishes, pytesNET <info@pytes.net>
+ |  @copyright  Copyright © 2019 SamBrishes, 2025 Ikem Krueger
  */
     if(!defined("BLUDIT")){ die("Go directly to Jail. Do not pass Go. Do not collect 200 Cookies!"); }
 
@@ -337,7 +337,7 @@
          |  @since  0.1.0
          */
         public function username(){
-            global $L, $users, $SnickerUsers;
+            global $L, $users, $KommentUsers;
 
             list($type, $id) = array_pad(explode("::", $this->getValue("author"), 2), 2, null);
             switch($type){
@@ -348,10 +348,10 @@
                     $user = new User($id);
                     return $user->nickname();
                 case "guest":
-                    if(!$SnickerUsers->exists($id)){
+                    if(!$KommentUsers->exists($id)){
                         break;
                     }
-                    return $SnickerUsers->db[$id]["username"];
+                    return $KommentUsers->db[$id]["username"];
                 case "unknown":
                     return $L->g("Unknown User");
             }
@@ -363,7 +363,7 @@
          |  @since  0.1.0
          */
         public function email(){
-            global $L, $users, $SnickerUsers;
+            global $L, $users, $KommentUsers;
 
             list($type, $id) = array_pad(explode("::", $this->getValue("author"), 2), 2, null);
             switch($type){
@@ -374,10 +374,10 @@
                     $user = new User($id);
                     return $user->email();
                 case "guest":
-                    if(!$SnickerUsers->exists($id)){
+                    if(!$KommentUsers->exists($id)){
                         break;
                     }
-                    return $SnickerUsers->db[$id]["email"];
+                    return $KommentUsers->db[$id]["email"];
                 case "unknown":
                     return "unknown@" . $_SERVER["SERVER_NAME"];
             }
@@ -449,7 +449,7 @@
             }
 
             // Return Mystery Man
-            return SNICKER_DOMAIN . "includes/img/default-avatar.jpg";
+            return KOMMENT_DOMAIN . "includes/img/default-avatar.jpg";
         }
 
         /*

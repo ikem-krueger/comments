@@ -1,13 +1,13 @@
 <?php
 /*
- |  Snicker     The first native FlatFile Comment Plugin 4 Bludit
+ |  Komment     The second native FlatFile Comment Plugin 4 Bludit
  |  @file       ./system/class.comments-index.php
- |  @author     SamBrishes <sam@pytes.net>
+ |  @author     Ikem Krueger <ikem.krueger@gmail.com>
  |  @version    0.1.2 [0.1.0] - Alpha
  |
- |  @website    https://github.com/pytesNET/snicker
+ |  @website    https://github.com/ikem-krueger/komment
  |  @license    X11 / MIT License
- |  @copyright  Copyright © 2019 SamBrishes, pytesNET <info@pytes.net>
+ |  @copyright  Copyright © 2019 SamBrishes, 2025 Ikem Krueger
  */
     if(!defined("BLUDIT")){ die("Go directly to Jail. Do not pass Go. Do not collect 200 Cookies!"); }
 
@@ -30,8 +30,8 @@
          |  @since  0.1.0
          */
         public function __construct(){
-            parent::__construct(DB_SNICKER_INDEX);
-            if(!file_exists(DB_SNICKER_INDEX)){
+            parent::__construct(DB_KOMMENT_INDEX);
+            if(!file_exists(DB_KOMMENT_INDEX)){
                 $this->db = array();
                 $this->save();
             }
@@ -296,7 +296,7 @@
          |  @return array   The respective unique comment IDs as ARRAY, FALSE on failure.
          */
         public function getListByUser($string, $page = 1, $limit = -1){
-            global $users, $SnickerUsers;
+            global $users, $KommentUsers;
 
             // Get Member / Guest
             $guest = false;
@@ -310,7 +310,7 @@
                     $member = "bludit::{$string}";
                 }
             }
-            if(($user = $SnickerUsers->get($string)) !== false){
+            if(($user = $KommentUsers->get($string)) !== false){
                 $guest = "guest::{$user["uuid"]}";
             }
             if(!$member && !$guest){
@@ -460,13 +460,13 @@
          |  @return bool    TRUE
          */
         public function sortBy(){
-            global $SnickerPlugin;
+            global $KommentPlugin;
 
-            if($SnickerPlugin->getValue("frontend_order") === "date_asc"){
+            if($KommentPlugin->getValue("frontend_order") === "date_asc"){
                 uasort($this->db, function($a, $b){
                     return $a["date"] > $b["date"];
                 });
-            } else if($SnickerPlugin->getValue("frontend_order") === "date_desc"){
+            } else if($KommentPlugin->getValue("frontend_order") === "date_desc"){
                 uasort($this->db, function($a, $b){
                     return $a["date"] < $b["date"];
                 });

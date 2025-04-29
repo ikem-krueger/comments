@@ -1,12 +1,12 @@
 /*
- |  Snicker     The first native FlatFile Comment Plugin 4 Bludit
- |  @file       ./system/themes/default/snicker.js
- |  @author     SamBrishes <sam@pytes.net>
+ |  Komment     The second native FlatFile Comment Plugin 4 Bludit
+ |  @file       ./system/themes/default/komment.js
+ |  @author     Ikem Krueger <ikem.krueger@gmail.com>
  |  @version    0.1.2 [0.1.0] - Alpha
  |
- |  @website    https://github.com/pytesNET/snicker
+ |  @website    https://github.com/ikem-krueger/komment
  |  @license    X11 / MIT License
- |  @copyright  Copyright © 2019 SamBrishes, pytesNET <info@pytes.net>
+ |  @copyright  Copyright © 2019 SamBrishes, 2025 Ikem Krueger
  */
 ;(function(root){
     "use strict";
@@ -65,7 +65,7 @@
 
         // Main Elements
         var form = d.querySelector("form.comment-form"),
-            list = d.querySelector(".snicker-comments-list"),
+            list = d.querySelector(".komment-comments-list"),
             captcha = d.querySelector("a[data-captcha='reload']");
 
         /*
@@ -74,13 +74,13 @@
         if(form){
             form.addEventListener("submit", function(event){
                 event.preventDefault();
-                if(typeof(FormData) !== "function" || !SNICKER_AJAX){
+                if(typeof(FormData) !== "function" || !KOMMENT_AJAX){
                     return true;
                 }
                 var data = new FormData(this), self = this;
 
                 // Check Button
-                var btn = this.querySelector("[name='snicker']");
+                var btn = this.querySelector("[name='komment']");
                 if(btn.disabled){
                     return true;
                 }
@@ -89,8 +89,8 @@
                 // AJAX Call
                 btn.disabled = true;
                 btn.classList.add("loading");
-                data.append("snicker", btn.value);
-                ajax(SNICKER_PATH, "POST", data, function(json){
+                data.append("komment", btn.value);
+                ajax(KOMMENT_PATH, "POST", data, function(json){
                     var data = JSON.parse(json);
 
                     // Add Comment
@@ -137,15 +137,15 @@
          */
         if(captcha){
             captcha.addEventListener("click", function(event){
-                if(!SNICKER_AJAX){
+                if(!KOMMENT_AJAX){
                     return false;
                 }
                 event.preventDefault();
                 captcha.classList.add("reload");
 
-                var data = "action=snicker&snicker=captcha&tokenCSRF=";
+                var data = "action=komment&komment=captcha&tokenCSRF=";
                 var token = d.querySelector("input[name='tokenCSRF']").value;
-                ajax(SNICKER_PATH, "POST", data + token, function(json){
+                ajax(KOMMENT_PATH, "POST", data + token, function(json){
                     var data = JSON.parse(json);
                     if(data.status !== "success"){
                         window.location.replace(captcha.getAttribute("href"));
@@ -167,7 +167,7 @@
 
                 // Check Link
                 var href = event.target.getAttribute("href");
-                if(href.indexOf("snicker=reply") < 0){
+                if(href.indexOf("komment=reply") < 0){
                     return true;
                 }
 
@@ -232,7 +232,7 @@
          */
         if(list){
             list.addEventListener("click", function(event){
-                if(event.target.tagName != "A" || !SNICKER_AJAX){
+                if(event.target.tagName != "A" || !KOMMENT_AJAX){
                     return true;
                 }
                 if(event.target.classList.contains("disabled")){
@@ -255,17 +255,17 @@
                 href = href.split("?");
 
                 // AJAX REQUEST
-                ajax(SNICKER_PATH, "POST", href[1], function(json){
+                ajax(KOMMENT_PATH, "POST", href[1], function(json){
                     var data = JSON.parse(json);
 
                     if(data.status === "success" && "rating" in data){
-                        var like = comment.querySelector("[data-snicker='like']");
+                        var like = comment.querySelector("[data-komment='like']");
                         if(like){
                             like.innerText = String(data.rating[0]);
                         }
                         like.parentElement.classList[(like.parentElement == self? "add": "remove")]("active");
 
-                        var dislike = comment.querySelector("[data-snicker='dislike']");
+                        var dislike = comment.querySelector("[data-komment='dislike']");
                         if(dislike){
                             dislike.innerText = String(data.rating[1]);
                         }

@@ -1,22 +1,22 @@
 <?php
 /*
- |  Snicker     The first native FlatFile Comment Plugin 4 Bludit
+ |  Komment     The second native FlatFile Comment Plugin 4 Bludit
  |  @file       ./admin/index.php
- |  @author     SamBrishes <sam@pytes.net>
+ |  @author     Ikem Krueger <ikem.krueger@gmail.com>
  |  @version    0.1.2 [0.1.0] - Alpha
  |
- |  @website    https://github.com/pytesNET/snicker
+ |  @website    https://github.com/ikem-krueger/komment
  |  @license    X11 / MIT License
- |  @copyright  Copyright © 2019 SamBrishes, pytesNET <info@pytes.net>
+ |  @copyright  Copyright © 2019 SamBrishes, 2025 Ikem Krueger
  */
     if(!defined("BLUDIT")){ die("Go directly to Jail. Do not pass Go. Do not collect 200 Cookies!"); }
 
-    global $L, $Snicker;
+    global $L, $Komment;
 
     // Pending Counter
-    $count = count($Snicker->getIndex("pending"));
+    $count = count($Komment->getIndex("pending"));
     $count = ($count > 99)? "99+": $count;
-    $spam  = count($Snicker->getIndex("spam"));
+    $spam  = count($Komment->getIndex("spam"));
 
     // Tab Strings
     $strings = array(
@@ -48,7 +48,7 @@
     <?php foreach($tabs AS $tab){ ?>
         <?php $class = "nav-link nav-{$tab}" . ($current === $tab? " active": ""); ?>
         <li class="nav-item">
-            <a id="<?php echo $tab; ?>-tab" href="#snicker-<?php echo $tab; ?>" class="<?php echo $class; ?>" data-toggle="tab">
+            <a id="<?php echo $tab; ?>-tab" href="#komment-<?php echo $tab; ?>" class="<?php echo $class; ?>" data-toggle="tab">
                 <?php
                     echo $strings[$tab];
                     if($tab === "pending" && !empty($count)){
@@ -65,7 +65,7 @@
     <li class="nav-item flex-grow-1"></li>
 
     <li class="nav-item mr-2">
-        <a id="users-tab" href="#snicker-users" class="nav-link nav-config" data-toggle="tab">
+        <a id="users-tab" href="#komment-users" class="nav-link nav-config" data-toggle="tab">
             <span class="oi oi-people"></span> <?php sn_e("Users"); ?>
         </a>
     </li>

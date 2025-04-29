@@ -1,19 +1,19 @@
 <?php
 /*
- |  Snicker     The first native FlatFile Comment Plugin 4 Bludit
+ |  Komment     The second native FlatFile Comment Plugin 4 Bludit
  |  @file       ./plugin.php
- |  @author     SamBrishes <sam@pytes.net>
+ |  @author     Ikem Krueger <ikem.krueger@gmail.com>
  |  @version    0.1.2 [0.1.0] - Alpha
  |
- |  @website    https://github.com/pytesNET/snicker
+ |  @website    https://github.com/ikem-krueger/komment
  |  @license    X11 / MIT License
- |  @copyright  Copyright © 2019 SamBrishes, pytesNET <info@pytes.net>
+ |  @copyright  Copyright © 2019 SamBrishes, 2025 Ikem Krueger
  */
     if(!defined("BLUDIT")){ die("Go directly to Jail. Do not pass Go. Do not collect 200 Cookies!"); }
 
     require_once "system/functions.php";    // Load Basic Functions
 
-    class SnickerPlugin extends Plugin{
+    class KommentPlugin extends Plugin{
         /*
          |  BACKEND VARIABLES
          */
@@ -26,8 +26,8 @@
          |  @since  0.1.0
          */
         public function __construct(){
-            global $SnickerPlugin;
-            $SnickerPlugin = $this;
+            global $KommentPlugin;
+            $KommentPlugin = $this;
             parent::__construct();
         }
 
@@ -179,27 +179,27 @@
          |  @update 0.1.1
          */
         public function installed(){
-            global $Snicker,            // Main Comment Handler
-                   $SnickerIndex,       // Main Comment Indexer
-                   $SnickerUsers,       // Main Comment Users
-                   $SnickerVotes;       // Main Comment Votes
+            global $Komment,            // Main Comment Handler
+                   $KommentIndex,       // Main Comment Indexer
+                   $KommentUsers,       // Main Comment Users
+                   $KommentVotes;       // Main Comment Votes
 
             if(file_exists($this->filenameDb)){
-                if(!defined("SNICKER")){
-                    define("SNICKER", true);
-                    define("SNICKER_PATH", PATH_PLUGINS . basename(__DIR__) . DS);
-                    define("SNICKER_DOMAIN", DOMAIN_PLUGINS . basename(__DIR__) . "/");
-                    define("SNICKER_VERSION", "0.1.2");
+                if(!defined("KOMMENT")){
+                    define("KOMMENT", true);
+                    define("KOMMENT_PATH", PATH_PLUGINS . basename(__DIR__) . DS);
+                    define("KOMMENT_DOMAIN", DOMAIN_PLUGINS . basename(__DIR__) . "/");
+                    define("KOMMENT_VERSION", "0.1.2");
 
                     // DataBases
-                    define("DB_SNICKER_COMMENTS", $this->workspace() . "pages" . DS);
-                    define("DB_SNICKER_INDEX", $this->workspace() . "comments-index.php");
-                    define("DB_SNICKER_USERS", $this->workspace() . "comments-users.php");
-                    define("DB_SNICKER_VOTES", $this->workspace() . "comments-votes.php");
+                    define("DB_KOMMENT_COMMENTS", $this->workspace() . "pages" . DS);
+                    define("DB_KOMMENT_INDEX", $this->workspace() . "comments-index.php");
+                    define("DB_KOMMENT_USERS", $this->workspace() . "comments-users.php");
+                    define("DB_KOMMENT_VOTES", $this->workspace() . "comments-votes.php");
 
                     // Pages Filter
-                    if(!file_exists(DB_SNICKER_COMMENTS)){
-                        @mkdir(DB_SNICKER_COMMENTS);
+                    if(!file_exists(DB_KOMMENT_COMMENTS)){
+                        @mkdir(DB_KOMMENT_COMMENTS);
                     }
 
                     // Load Plugin
@@ -209,13 +209,13 @@
                     require_once "system/class.comments-index.php";
                     require_once "system/class.comments-users.php";
                     require_once "system/class.comments-votes.php";
-                    require_once "system/class.snicker.php";
+                    require_once "system/class.komment.php";
                     require_once "includes/autoload.php";
                 } else {
-                    $Snicker      = new Snicker();
-                    $SnickerIndex = new CommentsIndex();
-                    $SnickerUsers = new CommentsUsers();
-                    $SnickerVotes = new CommentsVotes();
+                    $Komment      = new Komment();
+                    $KommentIndex = new CommentsIndex();
+                    $KommentUsers = new CommentsUsers();
+                    $KommentVotes = new CommentsVotes();
                     $this->request();
                 }
                 return true;
@@ -258,17 +258,17 @@
             // POST Redirect
             if($this->backendRequest !== "ajax"){
                 if($status){
-                    $key = empty($key)? "snicker-success": $key;
+                    $key = empty($key)? "komment-success": $key;
                     Alert::set($data["success"], ALERT_STATUS_OK, $key);
                 } else {
-                    $key = empty($key)? "snicker-alert": $key;
+                    $key = empty($key)? "komment-alert": $key;
                     Alert::set($data["error"], ALERT_STATUS_FAIL, $key);
                 }
 
                 if($data["referer"]){
                     Redirect::url($data["referer"]);
                 } else {
-                    $action = isset($_GET["snicker"])? $_GET["snicker"]: $_POST["snicker"];
+                    $action = isset($_GET["komment"])? $_GET["komment"]: $_POST["komment"];
                     Redirect::url(HTML_PATH_ADMIN_ROOT . $url->slug() . "#{$action}");
                 }
                 die();
@@ -293,28 +293,28 @@
          |  @update 0.1.1
          */
         public function request(){
-            global $login, $security, $url, $Snicker;
+            global $login, $security, $url, $Komment;
 
             // Get POST/GET Request
-            if(isset($_POST["action"]) && $_POST["action"] === "snicker"){
+            if(isset($_POST["action"]) && $_POST["action"] === "komment"){
                 $data = $_POST;
                 $this->backendRequest = "post";
-            } else if(isset($_GET["action"]) && $_GET["action"] === "snicker"){
+            } else if(isset($_GET["action"]) && $_GET["action"] === "komment"){
                 $data = $_GET;
                 $this->backendRequest = "get";
             }
-            if(!(isset($data) && isset($data["snicker"]))){
+            if(!(isset($data) && isset($data["komment"]))){
                 $this->backendRequest = null;
                 return null;
             }
 
             // Get AJAX Request
             $ajax = "HTTP_X_REQUESTED_WITH";
-            if(strpos($url->slug(), "snicker/ajax") === 0){
+            if(strpos($url->slug(), "komment/ajax") === 0){
                 if(isset($_SERVER[$ajax]) && $_SERVER[$ajax] === "XMLHttpRequest"){
                     $this->backendRequest = "ajax";
                 } else {
-                    return Redirect::url(HTML_PATH_ADMIN_ROOT . "snicker/");
+                    return Redirect::url(HTML_PATH_ADMIN_ROOT . "komment/");
                 }
             } else if(isset($_SERVER[$ajax]) && $_SERVER[$ajax] === "XMLHttpRequest"){
                 print("Invalid AJAX Call"); die();
@@ -329,7 +329,7 @@
             }
 
             $key = null;
-            if(in_array($data["snicker"], array("add", "edit", "delete", "config", "users", "backup", "moderate"))){
+            if(in_array($data["komment"], array("add", "edit", "delete", "config", "users", "backup", "moderate"))){
                 $key = "alert";
             }
 
@@ -365,24 +365,24 @@
             }
 
             // Route
-            switch($data["snicker"]){
+            switch($data["komment"]){
                 case "comment": //@fallthrough
                 case "reply":   //@fallthrough
                 case "add":
-                    return $Snicker->writeComment($data["comment"], $key);
+                    return $Komment->writeComment($data["comment"], $key);
                 /* case "update": */        //@todo User can edit his own comments
                 case "edit":
-                    return $Snicker->editComment($data["uid"], $data["comment"], $key);
+                    return $Komment->editComment($data["uid"], $data["comment"], $key);
                 /* case "remove": */        //@todo User can delete his own comments
                 case "delete":
-                    return $Snicker->deleteComment($data["uid"], $key);
+                    return $Komment->deleteComment($data["uid"], $key);
                 case "moderate":
-                    return $Snicker->moderateComment($data["uid"], $data["status"], $key);
+                    return $Komment->moderateComment($data["uid"], $data["status"], $key);
                 case "list":    //@fallthrough
                 case "get":
-                    return $Snicker->renderComment($data);
+                    return $Komment->renderComment($data);
                 case "rate":
-                    return $Snicker->rateComment($data["uid"], $data["type"]);
+                    return $Komment->rateComment($data["uid"], $data["type"]);
                 case "users":
                     return $this->user($data);
                 case "configure":
@@ -392,7 +392,7 @@
                 case "captcha":
                     return $this->response(array(
                         "success"   => sn__("The Captcha Image could be successfully created!"),
-                        "captcha"   => $Snicker->generateCaptcha(150, 40, true)
+                        "captcha"   => $Komment->generateCaptcha(150, 40, true)
                     ));
             }
             return $this->response(array(
@@ -405,7 +405,7 @@
          |  @since  0.1.0
          */
         private function user($data){
-            global $SnickerIndex, $SnickerUsers;
+            global $KommentIndex, $KommentUsers;
 
             // Validate Data
             if(!isset($data["uuid"]) || !isset($data["handle"])){
@@ -415,7 +415,7 @@
             }
 
             // Validata UUID
-            if(!$SnickerUsers->exists($data["uuid"])){
+            if(!$KommentUsers->exists($data["uuid"])){
                 return $this->response(array(
                     "error" => sn__("An unique user ID does not exist!")
                 ), "alert");
@@ -423,12 +423,12 @@
 
             // Handle
             if($data["handle"] === "delete"){
-                $comments = $SnickerUsers->db[$data["uuid"]]["comments"];
+                $comments = $KommentUsers->db[$data["uuid"]]["comments"];
                 foreach($comments AS $uid){
-                    if(!$SnickerIndex->exists($uid)){
+                    if(!$KommentIndex->exists($uid)){
                         continue;
                     }
-                    $index = $SnickerIndex->getComment($uid);
+                    $index = $KommentIndex->getComment($uid);
                     $comment = new Comments($index["page_uuid"]);
 
                     if(isset($data["anonymize"]) && $data["anonymize"] === "true"){
@@ -439,11 +439,11 @@
                         $comment->delete($uid);
                     }
                 }
-                $status = $SnickerUsers->delete($data["uuid"]);
+                $status = $KommentUsers->delete($data["uuid"]);
             } else if($data["handle"] === "block"){
-                $status = $SnickerUsers->edit($data["uuid"], null, null, true);
+                $status = $KommentUsers->edit($data["uuid"], null, null, true);
             } else if($data["handle"] === "unblock"){
-                $status = $SnickerUsers->edit($data["uuid"], null, null, false);
+                $status = $KommentUsers->edit($data["uuid"], null, null, false);
             }
 
             // Redirect
@@ -468,7 +468,7 @@
          |  @update 0.2.0
          */
         private function config($data){
-            global $pages, $Snicker;
+            global $pages, $Komment;
             $config = array();
 
             // Validations
@@ -542,7 +542,7 @@
 
                 // Sanitize Template
                 if($field == "frontend_template"){
-                    if($Snicker->hasTheme($data[$field])){
+                    if($Komment->hasTheme($data[$field])){
                         $config[$field] = $data[$field];
                     } else {
                         $config[$field] = $value;
@@ -577,7 +577,7 @@
          |  @since  0.1.0
          */
         private function backup(){
-            $filename = "snicker-backup-" . time() . ".zip";
+            $filename = "komment-backup-" . time() . ".zip";
 
             // Create Backup
             $zip = new PIT\Zip();
@@ -587,7 +587,7 @@
             // Return
             return $this->response(array(
                 "success"   => sn__("The backup has been created successfully!"),
-                "referer"   => DOMAIN_ADMIN . "uninstall-plugin/SnickerPlugin"
+                "referer"   => DOMAIN_ADMIN . "uninstall-plugin/KommentPlugin"
             ), "alert");
         }
 
@@ -603,14 +603,14 @@
         public function beforeAdminLoad(){
             global $url;
 
-            // Check if the current View is the "snicker"
-            if(strpos($url->slug(), "snicker") !== 0){
+            // Check if the current View is the "komment"
+            if(strpos($url->slug(), "komment") !== 0){
                 return false;
             }
             checkRole(array("admin"));
 
             // Set Backend View
-            $split = str_replace("snicker", "", trim($url->slug(), "/"));
+            $split = str_replace("komment", "", trim($url->slug(), "/"));
             if(!empty($split) && $split !== "/" && isset($_GET["uid"])){
                 $this->backendView = "edit";
             } else {
@@ -625,8 +625,8 @@
         public function adminHead(){
             global $page, $security, $url;
 
-            $js = SNICKER_DOMAIN . "admin/js/";
-            $css = SNICKER_DOMAIN . "admin/css/";
+            $js = KOMMENT_DOMAIN . "admin/js/";
+            $css = KOMMENT_DOMAIN . "admin/css/";
             $slug = explode("/", str_replace(HTML_PATH_ADMIN_ROOT, "", $url->uri()));
 
             // Admin Header
@@ -660,27 +660,27 @@
                         }());
                     </script>
                 <?php
-            } else if($slug[0] === "snicker"){
+            } else if($slug[0] === "komment"){
                 ?>
-                    <script type="text/javascript" src="<?php echo $js; ?>admin.snicker.js"></script>
-                    <link type="text/css" rel="stylesheet" href="<?php echo $css; ?>admin.snicker.css" />
+                    <script type="text/javascript" src="<?php echo $js; ?>admin.komment.js"></script>
+                    <link type="text/css" rel="stylesheet" href="<?php echo $css; ?>admin.komment.css" />
                 <?php
             } else if($slug[0] === "plugins"){
-                $link = DOMAIN_ADMIN . "snicker?action=snicker&snicker=backup&tokenCSRF=" . $security->getTokenCSRF();
+                $link = DOMAIN_ADMIN . "komment?action=komment&komment=backup&tokenCSRF=" . $security->getTokenCSRF();
                 ?>
                     <script type="text/javascript">
                         document.addEventListener("DOMContentLoaded", function(){
-                            var link = document.querySelector("tr#SnickerPlugin td a");
+                            var link = document.querySelector("tr#KommentPlugin td a");
                             if(link){
                                 link.addEventListener("click", function(event){
                                     event.preventDefault();
-                                    jQuery("#dialog-deactivate-snicker").modal();
+                                    jQuery("#dialog-deactivate-komment").modal();
                                 });
-                                jQuery("#dialog-deactivate-snicker button[data-snicker='backup']").click(function(){
+                                jQuery("#dialog-deactivate-komment button[data-komment='backup']").click(function(){
                                     console.log("owo");
                                     window.location.replace("<?php echo $link; ?>&referer=" + link.href);
                                 });
-                                jQuery("#dialog-deactivate-snicker button[data-snicker='deactivate']").click(function(){
+                                jQuery("#dialog-deactivate-komment button[data-komment='deactivate']").click(function(){
                                     window.location.replace(link.href);
                                 });
                             }
@@ -709,23 +709,23 @@
          |  @since  0.1.0
          */
         public function adminBodyEnd(){
-            global $url, $SnickerPlugin;
+            global $url, $KommentPlugin;
             if(!$this->backend || !$this->backendView){
                 $slug = explode("/", str_replace(HTML_PATH_ADMIN_ROOT, "", $url->uri()));
                 if($slug[0] === "plugins"){
                     ?>
-                        <div id="dialog-deactivate-snicker" class="modal fade" role="dialog">
+                        <div id="dialog-deactivate-komment" class="modal fade" role="dialog">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title"><?php sn_e("Snicker Plugin Deactivation"); ?></h5>
+                                        <h5 class="modal-title"><?php sn_e("Komment Plugin Deactivation"); ?></h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
                                         <p>
-                                            <?php sn_e("You are about to deactivate the <b>Snicker</b> Plugin, which will delete all written comments!"); ?>
+                                            <?php sn_e("You are about to deactivate the <b>Komment</b> Plugin, which will delete all written comments!"); ?>
                                             <?php sn_e("Do you want to Backup your comments before?"); ?>
                                         </p>
                                         <p>
@@ -733,8 +733,8 @@
                                         </p>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" data-snicker="backup"><?php sn_e("Yes, create a Backup"); ?></button>
-                                        <button type="button" class="btn btn-danger" data-snicker="deactivate"><?php sn_e("No, just Deactivate"); ?></button>
+                                        <button type="button" class="btn btn-primary" data-komment="backup"><?php sn_e("Yes, create a Backup"); ?></button>
+                                        <button type="button" class="btn btn-danger" data-komment="deactivate"><?php sn_e("No, just Deactivate"); ?></button>
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal"><?php sn_e("Cancel"); ?></button>
                                     </div>
                                 </div>
@@ -749,10 +749,10 @@
             $content = ob_get_contents();
             ob_end_clean();
 
-            // Snicker Admin Content
+            // Komment Admin Content
             ob_start();
-            if(file_exists(SNICKER_PATH . "admin" . DS . "{$this->backendView}.php")){
-                require SNICKER_PATH . "admin" . DS . "{$this->backendView}.php";
+            if(file_exists(KOMMENT_PATH . "admin" . DS . "{$this->backendView}.php")){
+                require KOMMENT_PATH . "admin" . DS . "{$this->backendView}.php";
                 $add = ob_get_contents();
             }
             ob_end_clean();
@@ -770,14 +770,14 @@
          |  @since  0.1.0
          */
         public function adminSidebar(){
-            global $SnickerIndex;
+            global $KommentIndex;
 
-            $count = $SnickerIndex->count("pending");
+            $count = $KommentIndex->count("pending");
             $count = ($count > 99)? "99+": $count;
 
             ob_start();
             ?>
-                <a href="<?php echo HTML_PATH_ADMIN_ROOT; ?>snicker" class="nav-link" style="white-space: nowrap;">
+                <a href="<?php echo HTML_PATH_ADMIN_ROOT; ?>komment" class="nav-link" style="white-space: nowrap;">
                     <span class="fa fa-comment-o"></span> <?php sn_e("Comments"); ?>
                     <?php if(!empty($count)){ ?>
                         <span class="badge badge-success badge-pill"><?php echo $count; ?></span>
@@ -820,19 +820,19 @@
          |  @since  0.1.0
          */
         public function siteHead(){
-            global $Snicker;
+            global $Komment;
 
-            if(($theme = $Snicker->getTheme()) === false){
+            if(($theme = $Komment->getTheme()) === false){
                 return false;
             }
-            if(!empty($theme::SNICKER_JS)){
-                $file = SNICKER_DOMAIN . "themes/" . sn_config("frontend_template") . "/" . $theme::SNICKER_JS;
+            if(!empty($theme::KOMMENT_JS)){
+                $file = KOMMENT_DOMAIN . "themes/" . sn_config("frontend_template") . "/" . $theme::KOMMENT_JS;
                 ?>
                     <script type="text/javascript">
-                        var SNICKER_AJAX = <?php echo sn_config("frontend_ajax")? "true": "false"; ?>;
-                        var SNICKER_PATH = "<?php echo HTML_PATH_ADMIN_ROOT ?>snicker/ajax/";
+                        var KOMMENT_AJAX = <?php echo sn_config("frontend_ajax")? "true": "false"; ?>;
+                        var KOMMENT_PATH = "<?php echo HTML_PATH_ADMIN_ROOT ?>komment/ajax/";
                     </script>
-                    <script id="snicker-js" type="text/javascript" src="<?php echo $file; ?>"></script>
+                    <script id="komment-js" type="text/javascript" src="<?php echo $file; ?>"></script>
                     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
                 <?php
             }
@@ -841,10 +841,10 @@
 
 
 
-            if(!empty($theme::SNICKER_CSS)){
-                $file = SNICKER_DOMAIN . "themes/" . sn_config("frontend_template") . "/" . $theme::SNICKER_CSS;
+            if(!empty($theme::KOMMENT_CSS)){
+                $file = KOMMENT_DOMAIN . "themes/" . sn_config("frontend_template") . "/" . $theme::KOMMENT_CSS;
                 ?>
-                    <link id="snicker-css" type="text/css" rel="stylesheet" href="<?php echo $file; ?>" />
+                    <link id="komment-css" type="text/css" rel="stylesheet" href="<?php echo $file; ?>" />
                 <?php
             }
         }
@@ -854,11 +854,11 @@
          |  @since  0.1.0
          */
         public function siteBodyBegin(){
-            global $Snicker;
+            global $Komment;
             if(sn_config("frontend_filter") !== "siteBodyBegin"){
                 return false; // owo
             }
-            print($Snicker->render());
+            print($Komment->render());
         }
 
         /*
@@ -866,11 +866,11 @@
          |  @since  0.1.0
          */
         public function pageBegin(){
-            global $Snicker;
+            global $Komment;
             if(sn_config("frontend_filter") !== "pageBegin"){
                 return false; // Owo
             }
-            print($Snicker->render());
+            print($Komment->render());
         }
 
         /*
@@ -878,11 +878,11 @@
          |  @since  0.1.0
          */
         public function pageEnd(){
-            global $Snicker;
+            global $Komment;
             if(sn_config("frontend_filter") !== "pageEnd"){
                 return false; // owO
             }
-            print($Snicker->render());
+            print($Komment->render());
         }
 
         /*
@@ -890,10 +890,10 @@
          |  @since  0.1.0
          */
         public function siteBodyEnd(){
-            global $Snicker;
+            global $Komment;
             if(sn_config("frontend_filter") !== "siteBodyEnd"){
                 return false; // OwO
             }
-            print($Snicker->render());
+            print($Komment->render());
         }
     }

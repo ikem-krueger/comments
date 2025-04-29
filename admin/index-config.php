@@ -1,24 +1,24 @@
 <?php
 /*
- |  Snicker     The first native FlatFile Comment Plugin 4 Bludit
+ |  Komment     The second native FlatFile Comment Plugin 4 Bludit
  |  @file       ./admin/index-config.php
- |  @author     SamBrishes <sam@pytes.net>
+ |  @author     Ikem Krueger <ikem.krueger@gmail.com>
  |  @version    0.1.2 [0.1.0] - Alpha
  |
- |  @website    https://github.com/pytesNET/snicker
+ |  @website    https://github.com/ikem-krueger/komment
  |  @license    X11 / MIT License
- |  @copyright  Copyright © 2019 SamBrishes, pytesNET <info@pytes.net>
+ |  @copyright  Copyright © 2019 SamBrishes, 2025 Ikem Krueger
  */
     if(!defined("BLUDIT")){ die("Go directly to Jail. Do not pass Go. Do not collect 200 Cookies!"); }
 
-    global $L, $login, $pages, $security, $Snicker, $SnickerPlugin;
+    global $L, $login, $pages, $security, $Komment, $KommentPlugin;
 
     // Get Static Pages
     $static = $pages->getStaticDB(false);
 
 ?>
-<div id="snicker-configure" class="tab-pane">
-    <form method="post" action="<?php echo HTML_PATH_ADMIN_ROOT; ?>snicker#configure">
+<div id="komment-configure" class="tab-pane">
+    <form method="post" action="<?php echo HTML_PATH_ADMIN_ROOT; ?>komment#configure">
         <div class="accordion shadow-sm" id="accordion-settings">
             <div class="card">
                 <div class="card-header text-uppercase pt-3 pb-3 pl-4 pr-4" data-toggle="collapse" data-target="#accordion-general"><?php sn_e("General Settings"); ?></div>
@@ -137,7 +137,7 @@
                                         <?php sn_e("The <b>Database Storage</b> generates and stores an anonymized but assignable value of the user, which also requires the appropriate permissions from the user."); ?>
                                     </p>
                                     <p class="bg-light border-top" style="margin: -.5rem -.75rem;padding: .5rem .75rem;border-radius: 0 0 3px 3px;">
-                                        <?php sn_e("<b>Please Note:</b> You are responsible for obtaining the appropriate permissions, Snicker just handles the permissions for data send (and stored) via the comment form!"); ?>
+                                        <?php sn_e("<b>Please Note:</b> You are responsible for obtaining the appropriate permissions, Komment just handles the permissions for data send (and stored) via the comment form!"); ?>
                                     </p>
                                 </div>
 
@@ -195,9 +195,9 @@
                             <div class="col-sm-9">
                                 <select id="sn-template" name="frontend_template" class="form-control custom-select">
                                     <?php
-                                        foreach($Snicker->themes AS $key => $theme){
+                                        foreach($Komment->themes AS $key => $theme){
                                             ?>
-                                                <option value="<?php echo $key; ?>" <?php sn_selected("frontend_template", $key); ?>><?php echo $theme::SNICKER_NAME;  ?></option>
+                                                <option value="<?php echo $key; ?>" <?php sn_selected("frontend_template", $key); ?>><?php echo $theme::KOMMENT_NAME;  ?></option>
                                             <?php
                                         }
                                     ?>
@@ -362,7 +362,7 @@
                             <label for="sn-success-1" class="col-sm-3 col-form-label"><?php sn_e("Default Thanks Message"); ?></label>
                             <div class="col-sm-9">
                                 <input type="text" id="sn-success-1" name="string_success_1" value="<?php echo sn_config("string_success_1"); ?>"
-                                    class="form-control" placeholder="<?php echo $SnickerPlugin->dbFields["string_success_1"]; ?>" />
+                                    class="form-control" placeholder="<?php echo $KommentPlugin->dbFields["string_success_1"]; ?>" />
                             </div>
                         </div>
 
@@ -370,7 +370,7 @@
                             <label for="sn-success-2" class="col-sm-3 col-form-label"><?php sn_e("Thanks Message with Subscription"); ?></label>
                             <div class="col-sm-9">
                                 <input type="text" id="sn-success-2" name="string_success_2" value="<?php echo sn_config("string_success_2"); ?>"
-                                    class="form-control" placeholder="<?php echo $SnickerPlugin->dbFields["string_success_2"]; ?>" />
+                                    class="form-control" placeholder="<?php echo $KommentPlugin->dbFields["string_success_2"]; ?>" />
                             </div>
                         </div>
 
@@ -378,7 +378,7 @@
                             <label for="sn-success-3" class="col-sm-3 col-form-label"><?php sn_e("Thanks Message for Voting"); ?></label>
                             <div class="col-sm-9">
                                 <input type="text" id="sn-success-3" name="string_success_3" value="<?php echo sn_config("string_success_3"); ?>"
-                                    class="form-control" placeholder="<?php echo $SnickerPlugin->dbFields["string_success_3"]; ?>" />
+                                    class="form-control" placeholder="<?php echo $KommentPlugin->dbFields["string_success_3"]; ?>" />
                             </div>
                         </div>
 
@@ -386,7 +386,7 @@
                             <label for="sn-error-1" class="col-sm-3 col-form-label"><?php sn_e("Error: Unknown Error, Try again"); ?></label>
                             <div class="col-sm-9">
                                 <input type="text" id="sn-error-1" name="string_error_1" value="<?php echo sn_config("string_error_1"); ?>"
-                                    class="form-control" placeholder="<?php echo $SnickerPlugin->dbFields["string_error_1"]; ?>" />
+                                    class="form-control" placeholder="<?php echo $KommentPlugin->dbFields["string_error_1"]; ?>" />
                             </div>
                         </div>
 
@@ -394,7 +394,7 @@
                             <label for="sn-error-2" class="col-sm-3 col-form-label"><?php sn_e("Error: Username is invalid"); ?></label>
                             <div class="col-sm-9">
                                 <input type="text" id="sn-error-2" name="string_error_2" value="<?php echo sn_config("string_error_2"); ?>"
-                                    class="form-control" placeholder="<?php echo $SnickerPlugin->dbFields["string_error_2"]; ?>" />
+                                    class="form-control" placeholder="<?php echo $KommentPlugin->dbFields["string_error_2"]; ?>" />
                             </div>
                         </div>
 
@@ -402,7 +402,7 @@
                             <label for="sn-error-3" class="col-sm-3 col-form-label"><?php sn_e("Error: eMail Address is invalid"); ?></label>
                             <div class="col-sm-9">
                                 <input type="text" id="sn-error-3" name="string_error_3" value="<?php echo sn_config("string_error_3"); ?>"
-                                    class="form-control" placeholder="<?php echo $SnickerPlugin->dbFields["string_error_3"]; ?>" />
+                                    class="form-control" placeholder="<?php echo $KommentPlugin->dbFields["string_error_3"]; ?>" />
                             </div>
                         </div>
 
@@ -410,7 +410,7 @@
                             <label for="sn-error-4" class="col-sm-3 col-form-label"><?php sn_e("Error: Comment Text is missing"); ?></label>
                             <div class="col-sm-9">
                                 <input type="text" id="sn-error-4" name="string_error_4" value="<?php echo sn_config("string_error_4"); ?>"
-                                    class="form-control" placeholder="<?php echo $SnickerPlugin->dbFields["string_error_4"]; ?>" />
+                                    class="form-control" placeholder="<?php echo $KommentPlugin->dbFields["string_error_4"]; ?>" />
                             </div>
                         </div>
 
@@ -418,7 +418,7 @@
                             <label for="sn-error-5" class="col-sm-3 col-form-label"><?php sn_e("Error: Comment Title is missing"); ?></label>
                             <div class="col-sm-9">
                                 <input type="text" id="sn-error-5" name="string_error_5" value="<?php echo sn_config("string_error_5"); ?>"
-                                    class="form-control" placeholder="<?php echo $SnickerPlugin->dbFields["string_error_5"]; ?>" />
+                                    class="form-control" placeholder="<?php echo $KommentPlugin->dbFields["string_error_5"]; ?>" />
                             </div>
                         </div>
 
@@ -426,7 +426,7 @@
                             <label for="sn-error-6" class="col-sm-3 col-form-label"><?php sn_e("Error: Terms not accepted"); ?></label>
                             <div class="col-sm-9">
                                 <input type="text" id="sn-error-6" name="string_error_6" value="<?php echo sn_config("string_error_6"); ?>"
-                                    class="form-control" placeholder="<?php echo $SnickerPlugin->dbFields["string_error_6"]; ?>" />
+                                    class="form-control" placeholder="<?php echo $KommentPlugin->dbFields["string_error_6"]; ?>" />
                             </div>
                         </div>
 
@@ -434,7 +434,7 @@
                             <label for="sn-error-7" class="col-sm-3 col-form-label"><?php sn_e("Error: Marked as SPAM"); ?></label>
                             <div class="col-sm-9">
                                 <input type="text" id="sn-error-7" name="string_error_7" value="<?php echo sn_config("string_error_7"); ?>"
-                                    class="form-control" placeholder="<?php echo $SnickerPlugin->dbFields["string_error_7"]; ?>" />
+                                    class="form-control" placeholder="<?php echo $KommentPlugin->dbFields["string_error_7"]; ?>" />
                             </div>
                         </div>
 
@@ -442,7 +442,7 @@
                             <label for="sn-error-8" class="col-sm-3 col-form-label"><?php sn_e("Error: Already Voted"); ?></label>
                             <div class="col-sm-9">
                                 <input type="text" id="sn-error-8" name="string_error_8" value="<?php echo sn_config("string_error_8"); ?>"
-                                    class="form-control" placeholder="<?php echo $SnickerPlugin->dbFields["string_error_8"]; ?>" />
+                                    class="form-control" placeholder="<?php echo $KommentPlugin->dbFields["string_error_8"]; ?>" />
                             </div>
                         </div>
 
@@ -450,7 +450,7 @@
                             <label for="sn-terms-of-use" class="col-sm-3 col-form-label"><?php sn_e("Terms of Use"); ?></label>
                             <div class="col-sm-9">
                                 <input type="text" id="sn-terms-of-use" name="string_terms_of_use" value="<?php echo sn_config("string_terms_of_use"); ?>"
-                                    class="form-control" placeholder="<?php echo $SnickerPlugin->dbFields["string_terms_of_use"]; ?>" />
+                                    class="form-control" placeholder="<?php echo $KommentPlugin->dbFields["string_terms_of_use"]; ?>" />
                             </div>
                         </div>
                     </div>

@@ -1,12 +1,12 @@
 /*
- |  Snicker     The first native FlatFile Comment Plugin 4 Bludit
- |  @file       ./admin/js/admin.snicker.js
- |  @author     SamBrishes <sam@pytes.net>
+ |  Komment     The second native FlatFile Comment Plugin 4 Bludit
+ |  @file       ./admin/js/admin.komment.js
+ |  @author     Ikem Krueger <ikem.krueger@gmail.com>
  |  @version    0.1.2 [0.1.0] - Alpha
  |
- |  @website    https://github.com/pytesNET/snicker
+ |  @website    https://github.com/ikem-krueger/komment
  |  @license    X11 / MIT License
- |  @copyright  Copyright © 2019 SamBrishes, pytesNET <info@pytes.net>
+ |  @copyright  Copyright © 2019 SamBrishes, 2025 Ikem Krueger
  */
 ;(function(root){
     "use strict";
@@ -58,7 +58,7 @@
                     if(w.location.hash.length == 0){
                         var link = mainMenu.querySelector("li a");
                     } else {
-                        var link = mainMenu.querySelector("[href='#snicker-" + w.location.hash.substr(1) + "']");
+                        var link = mainMenu.querySelector("[href='#komment-" + w.location.hash.substr(1) + "']");
                     }
                 }
                 if(!(link instanceof Element)){
@@ -70,7 +70,7 @@
                     link.click();
                 }
                 if(link){
-                    w.location.hash = link.getAttribute("href").replace("snicker-", "");
+                    w.location.hash = link.getAttribute("href").replace("komment-", "");
                 }
             };
 
@@ -91,7 +91,7 @@
                 if(w.location.hash.length == 0){
                     var link = mainMenu.querySelector("li a");
                 } else {
-                    var link = mainMenu.querySelector("[href='#snicker-" + w.location.hash.substr(1) + "']");
+                    var link = mainMenu.querySelector("[href='#komment-" + w.location.hash.substr(1) + "']");
                 }
                 menuLink(link);
             };

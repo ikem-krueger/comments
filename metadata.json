@@ -1,9 +1,9 @@
 {
-    "author": "SamBrishes, pytesNET",
-    "email": "",
-    "website": "",
+    "author": "Ikem Krueger",
+    "email": "ikem.krueger@gmail.com",
+    "website": "https://github.com/ikem-krueger/komment",
     "version": "0.1.2",
-    "releaseDate": "2019-05-06",
+    "releaseDate": "2025-04-29",
     "license": "MIT",
     "compatible": "3.5.0",
     "notes": "Added to the public Bludit repository 2022-03-15"

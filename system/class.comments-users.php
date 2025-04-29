@@ -1,13 +1,13 @@
 <?php
 /*
- |  Snicker     The first native FlatFile Comment Plugin 4 Bludit
+ |  Komment     The second native FlatFile Comment Plugin 4 Bludit
  |  @file       ./system/class.comments-users.php
- |  @author     SamBrishes <sam@pytes.net>
+ |  @author     Ikem Krueger <ikem.krueger@gmail.com>
  |  @version    0.1.2 [0.1.0] - Alpha
  |
- |  @website    https://github.com/pytesNET/snicker
+ |  @website    https://github.com/ikem-krueger/komment
  |  @license    X11 / MIT License
- |  @copyright  Copyright © 2019 SamBrishes, pytesNET <info@pytes.net>
+ |  @copyright  Copyright © 2019 SamBrishes, 2025 Ikem Krueger
  */
     if(!defined("BLUDIT")){ die("Go directly to Jail. Do not pass Go. Do not collect 200 Cookies!"); }
 
@@ -28,8 +28,8 @@
          |  @since  0.1.0
          */
         public function __construct(){
-            parent::__construct(DB_SNICKER_USERS);
-            if(!file_exists(DB_SNICKER_USERS)){
+            parent::__construct(DB_KOMMENT_USERS);
+            if(!file_exists(DB_KOMMENT_USERS)){
                 $this->db = array();
                 $this->save();
             }
@@ -45,7 +45,7 @@
          |  @return multi   The comment keys / objects as ARRAY, FALSE on failure.
          */
         public function getComments($uuid, $keys = true){
-            global $Snicker;
+            global $Komment;
 
             // Validate Data
             if(Valid::email($uuid) !== false){
@@ -63,7 +63,7 @@
 
             // Return Objects
             foreach($data AS &$key){
-                $key = $Snicker->getComment($key);
+                $key = $Komment->getComment($key);
             }
             return $key;
         }
